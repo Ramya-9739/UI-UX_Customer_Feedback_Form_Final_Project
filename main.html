@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Feedback</title>
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      background: linear-gradient(
+          to right,
+          #6a11cb,
+          #2575fc
+        ),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80')
+          center/cover no-repeat;
+      min-height: 100vh;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .feedback-container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      max-width: 600px;
+      margin: 50px auto;
+    }
+
+    .star-rating {
+      direction: rtl;
+      display: flex;
+      font-size: 2rem;
+      justify-content: flex-start;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      color: #ccc;
+      cursor: pointer;
+      padding: 0 6px;
+      transition: color 0.2s ease-in-out;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffc107;
+    }
+
+    .form-group label {
+      font-weight: 600;
+    }
+
+    .btn-submit {
+      background-color: #2575fc;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 10px 20px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #154ecb;
+      color: #fff;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 0.9rem;
+    }
+
+    .back-btn {
+      display: block;
+      max-width: 100px;
+      margin: 0 0 20px 0;
+      text-decoration: none;
+      color: #2575fc;
+      font-weight: 600;
+    }
+    .back-btn:hover {
+      color: #154ecb;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 575.98px) {
+      .feedback-container {
+        margin: 20px 15px;
+        padding: 20px;
+      }
+
+      .star-rating {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="welcome.html" class="back-btn">&larr; Back to Welcome</a>
+    <div class="feedback-container">
+      <h2 class="text-center mb-4">Customer Feedback Form</h2>
+      <form id="feedbackForm" novalidate>
+        <div class="form-group">
+          <label for="name">Name (optional)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email (optional)</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Rate our service/product</label>
+          <div class="star-rating" id="ratingStars">
+            <input type="radio" id="star5" name="rating" value="5" />
+            <label for="star5" title="5 stars">★</label>
+
+            <input type="radio" id="star4" name="rating" value="4" />
+            <label for="star4" title="4 stars">★</label>
+
+            <input type="radio" id="star3" name="rating" value="3" />
+            <label for="star3" title="3 stars">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2" />
+            <label for="star2" title="2 stars">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1" />
+            <label for="star1" title="1 star">★</label>
+          </div>
+          <div id="ratingError" class="error-message d-none">
+            Please select a rating
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Your Comments</label>
+          <textarea
+            class="form-control"
+            id="comments"
+            name="comments"
+            rows="4"
+            placeholder="Write your feedback here..."
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please enter your comments</div>
+        </div>
+
+        <button type="submit" class="btn btn-submit btn-block">
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#feedbackForm').on('submit', function (e) {
+        e.preventDefault();
+
+        // Reset error messages
+        $('#ratingError').addClass('d-none');
+        $('#comments').removeClass('is-invalid');
+
+        let isValid = true;
+
+        // Validate rating
+        if (!$('input[name="rating"]:checked').val()) {
+          $('#ratingError').removeClass('d-none');
+          isValid = false;
+        }
+
+        // Validate comments
+        if ($('#comments').val().trim() === '') {
+          $('#comments').addClass('is-invalid');
+          isValid = false;
+        }
+
+        if (isValid) {
+          // Redirect to exit page on successful submit
+          window.location.href = 'exit.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
